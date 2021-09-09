@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 using TMPro;
 
 public class PlayerController : MonoBehaviour
@@ -17,6 +18,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float slowedIntensity;
     [SerializeField] private int coinCount;
     [SerializeField] private Vector3 xVelocity;
+    [SerializeField] private float playerRunTime;
     private Vector3 fowardVelocity;
     public float playerSpeed;
     public float forwardSpeed;
@@ -25,6 +27,7 @@ public class PlayerController : MonoBehaviour
     private Rigidbody deathPlaneRB;
     public TMP_Text centerScreenText;
     public TMP_Text topLeftText;
+    public TMP_Text topRightText;
 
     // Start is called before the first frame update
     void Start()
@@ -34,7 +37,9 @@ public class PlayerController : MonoBehaviour
         movingForward = true;
         isPaused = false;
         slowedIntensity = 0;
+        playerRunTime = 0f;
         topLeftText.SetText("<color=yellow>Coins: </color>");
+        topRightText.SetText("<color=grey>Time: </color>");
         deathPlaneRB.position = transform.position - new Vector3(0f, 0f, 20f);//start the deathPlane 20f behind the player;
     }
 
@@ -44,7 +49,9 @@ public class PlayerController : MonoBehaviour
         if(!isPaused)
         {
             xInput = Input.GetAxisRaw("Horizontal");
-
+            playerRunTime+= (Time.time-playerRunTime);
+            topRightText.SetText("<color=grey>Time: " + TimeSpan.FromSeconds(playerRunTime).ToString(@"mm\:ss") + "</color>");
+            
             if(xInput != 0)
             {
                 xVelocity = transform.right*playerSpeed*xInput;

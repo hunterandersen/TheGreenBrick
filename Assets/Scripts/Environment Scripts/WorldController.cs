@@ -5,7 +5,7 @@ using UnityEngine;
 public class WorldController : MonoBehaviour
 {
 
-    [Header("Private Vars")]
+    [Header("Private Variables")]
     private float minXSpawn;
     private float minZSpawn;
     private float maxXSpawn;
